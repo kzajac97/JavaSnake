@@ -1,3 +1,4 @@
+package snakeapp;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +11,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-class MainWindow extends JFrame {
+class MainWindow extends JFrame 
+{
     private JTable tablePeople;
     private JTextField textFieldSurname;
     private JTextField textFieldAge;
@@ -24,7 +26,8 @@ class MainWindow extends JFrame {
     float af;
     boolean way;
 
-    MainWindow() {
+    MainWindow() 
+    {
         this.setSize(600, 500);
         this.setTitle("Platformy programistyczne .Net i Java, labolatorium, Java, lab01");
         this.setContentPane(panelMain);
