@@ -1,1 +1,1 @@
-# JavaSnake
+# platformy_java
