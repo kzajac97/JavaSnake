@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package snakeapp;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,29 +7,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author terg
- */
+
 public class GameFrame extends JFrame implements KeyListener
 {
     final Point frameLimit[] = { new Point(20, 60), 
                                  new Point(480, 360) };
                                     
-    final Dimension size = new Dimension(700, 520);  
+    final Dimension size = new Dimension(700, 700);
     private final Timer timer; 
-    final int startSpeed = 100;
+    int startSpeed = 100;
     int speed;
     int scoreValue;    
     JPanel panel;
@@ -45,6 +32,12 @@ public class GameFrame extends JFrame implements KeyListener
     JButton exit;
     JLabel score;
     JLabel pause;
+    JLabel nn;
+    JTextField nick;
+    HighScore highScore;
+
+    JComboBox speedList;
+    JLabel nn1, nn2, nn3, scores;
 
     public GameFrame()
     {         
@@ -54,11 +47,13 @@ public class GameFrame extends JFrame implements KeyListener
 
         speed = startSpeed;
 
+        highScore = new HighScore();
+
         timer = new Timer();   
 
         panel = new JPanel();
         panel.setOpaque(true); 
-        panel.setPreferredSize(new Dimension(640,40));
+        panel.setPreferredSize(new Dimension(640,100));
         panel.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         panel.setLayout(null);
         
@@ -74,14 +69,69 @@ public class GameFrame extends JFrame implements KeyListener
 
         pause = new JLabel("Press 'P' to pause");
         pause.setBounds(150,5,150,30);
-            
+
+        nn = new JLabel("Nickname:");
+        nn.setBounds(400,3,100,15);
+
+        nick = new JTextField(15);
+        nick.setBounds(400,18,100,16);
+        nick.setText("John Galt");
+
+        scores = new JLabel("High scores:");
+        scores.setBounds(50, 40, 100 ,15);
+
+        nn1 = new JLabel(highScore.position.get(0).nickname + " " + highScore.position.get(0).score );
+        nn1.setBounds(150, 40, 100 ,15);
+        nn2 = new JLabel(highScore.position.get(1).nickname + " " + highScore.position.get(1).score );
+        nn2.setBounds(150, 55, 100 ,15);
+        nn3 = new JLabel(highScore.position.get(2).nickname + " " + highScore.position.get(2).score );
+        nn3.setBounds(150, 70, 100 ,15);
+
+
+        String[] speedStrings = { "Pyton", "Żmija", "Grzechotnik" };
+
+        speedList = new JComboBox(speedStrings);
+        speedList.setBounds(300,50,100,20);
+
+
         game_on=false;
+
         panel.add(start);
         panel.add(exit);
         panel.add(score);      
         panel.add(pause);
-        panel.setVisible(true);     
-                     
+        panel.add(nn);
+        panel.add(nick);
+        panel.add(nn1);
+        panel.add(nn2);
+        panel.add(nn3);
+        panel.add(scores);
+        panel.add(speedList);
+
+        panel.setVisible(true);
+
+        speedList.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                switch (speedList.getSelectedIndex()) {
+                    case 0:
+                        System.out.println("case 0");
+                        setSpeed(100);
+                        break;
+                    case 1:
+                        System.out.println("case 1");
+                        setSpeed(200);
+                        break;
+                    case 2:
+                        System.out.println("case 2");
+                        setSpeed(300);
+                        break;
+                }
+            }
+        });
+
         start.addActionListener(new ActionListener() 
         {
             @Override
@@ -243,11 +293,12 @@ public class GameFrame extends JFrame implements KeyListener
     }
     
     void restart()
-    {     
+    {
+        updateHighscore();
         gamePanel.snake.destroySnake();
         gamePanel.snake = new Snake();
         gamePanel.generator.generateFood();
-        scoreValue = 0;      
+        scoreValue = 0;
         game_on = true;        
     }
     
@@ -261,5 +312,17 @@ public class GameFrame extends JFrame implements KeyListener
 
         else if(decision == 1)
             { System.exit(0);}
+    }
+
+    void updateHighscore()
+    {
+        highScore.addToHighScore(nick.getText(),scoreValue);
+
+        nn1.setText(highScore.position.get(0).nickname + " " + highScore.position.get(0).score );
+
+        nn2.setText(highScore.position.get(1).nickname + " " + highScore.position.get(1).score );
+
+        nn3.setText(highScore.position.get(2).nickname + " " + highScore.position.get(2).score );
+
     }
 }

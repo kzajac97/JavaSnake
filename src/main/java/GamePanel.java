@@ -1,22 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package snakeapp;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-/**
- *
- * @author terg
- */
 public class GamePanel extends JPanel
 {
     Snake snake;
@@ -39,16 +26,24 @@ public class GamePanel extends JPanel
         Rectangle2D scene = new Rectangle2D.Float(20, 60, 480, 320);
         Rectangle2D sceneBorder = new Rectangle2D.Float(0,40,680,400);
 
-        graphics.setColor(Color.red);
+        graphics.setColor(new Color(68, 152, 255));
         graphics.fill(sceneBorder);
-        graphics.setColor(new Color(0,255,0));
+        graphics.setPaint(new GradientPaint(0, 0, new Color(187, 237, 61),480, 320,
+                new Color(120, 255, 39)));
         graphics.fill(scene);
         
         for (int i=0; i<snake.body.size(); i++)
         {
-            graphics.setColor(new Color(0,150,150));
+            if(i == 0) graphics.setColor(new Color(115, 0, 18));
+            else
+                {
+                if (i % 2 == 1) graphics.setColor(new Color(255, 228, 7));
+                else graphics.setColor(new Color(214, 0, 34));
+            }
+
+
             graphics.fill(snake.body.get(i).body);
-            graphics.setColor(Color.red);
+            graphics.setColor(new Color(0,155,0));
             graphics.draw(snake.body.get(i).body);  
         }            
 

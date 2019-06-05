@@ -1,4 +1,3 @@
-package snakeapp;
 
 import java.awt.EventQueue;
 public class App

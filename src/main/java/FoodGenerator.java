@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package snakeapp;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,10 +6,6 @@ import java.awt.Point;
 import javax.swing.JPanel;
 import java.util.Random;
 
-/**
- *
- * @author terg
- */
 public class FoodGenerator
 {
     Random positionGenerator;
@@ -35,8 +25,8 @@ public class FoodGenerator
     public void generateFood()
     {
         // random coordinates 
-        int x = 20 + Math.abs(20 * (positionGenerator.nextInt() % 20));
-        int y = 60 + Math.abs(20 * (positionGenerator.nextInt() % 20));
+        int x = 20 + Math.abs(20 * (positionGenerator.nextInt() % 21));
+        int y = 60 + Math.abs(20 * (positionGenerator.nextInt() % 14));
         
         food = new Food( new Point(x,y) );
     }
